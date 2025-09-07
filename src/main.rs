@@ -1,41 +1,42 @@
-use std::{intrinsics::const_eval_select, io};
-use rand::{rng, Rng};
+use std::io;
+use std::cmp::Ordering;
+use rand::Rng;
 
 fn main() {
-    println!("++++++++++++++++++++++");
-    println!("Welcome to Guessing Game !!");
-    println!("++++++++++++++++++++++");
+    println!("Guess the number!");
+
+    // Generate a secret number
+    let secret_number = rand::thread_rng().gen_range(1..=100);
 
     
-    println!("Enter Your Name:");
-    let mut name = String::new();
-    io::stdin()
-        .read_line(&mut name)
-        .expect("Failed to read the name");
+    loop {
+        println!("Please input your guess:");
 
-    
-    println!("Hello {}, welcome to a rusty guessing game!!", name.trim());
-    println!("Now, please enter your guess:");
+        // Read user input
+        let mut guess = String::new();
+        io::stdin()
+            .read_line(&mut guess)
+            .expect("Failed to read line");
 
-  
-    let mut guess = u128::;
-    io::stdin()
-        .read_line(&mut guess)
-        .expect("Failed to read the guess");
+        
+        let guess: u32 = match guess.trim().parse() {
+            Ok(num) => num,
+            Err(_) => {
+                println!("Please type a number!");
+                continue;
+            }
+        };
 
-    // You can now use the guess
-    println!("You guessed: {}", guess.trim());
+        println!("You guessed: {}", guess);
 
-
-      // Random number gen
-    
-    let randomnumber = rand::thread_rng().gen_range(1..101);
-    if randomnumber == guess {
-          println!("Your correct!!");
+        
+        match guess.cmp(&secret_number) {
+            Ordering::Less => println!("Too small!"),
+            Ordering::Greater => println!("Too big!"),
+            Ordering::Equal => {
+                println!("You win!");
+                break; 
+            }
+        }
     }
-  
-   
-    println!("Random number:{}",randomnumber);
-    
-
-}
+}   
