@@ -6,7 +6,7 @@ fn main() {
     println!("Guess the number!");
 
     // Generate a secret number
-    let secret_number = rand::thread_rng().gen_range(1..=100);
+    let secret_number = rand::thread_rng().gen_range(1..=1000);
 
     
     loop {
@@ -17,9 +17,8 @@ fn main() {
         io::stdin()
             .read_line(&mut guess)
             .expect("Failed to read line");
-
         
-        let guess: u32 = match guess.trim().parse() {
+       let guess: u32 = match guess.trim().parse() {
             Ok(num) => num,
             Err(_) => {
                 println!("Please type a number!");
